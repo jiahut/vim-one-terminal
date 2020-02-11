@@ -35,24 +35,24 @@ endif
 
 let g:oneterm.row = 15
 let g:oneterm.pos = "below"
-let g:oneterm.opened = 0
+let g:oneterm.opened = v:false
 
 
 fun! oneterm.getOrCreate() dict
   if exists("self.main") && bufexists(self.main)
     " echom "show " . self.main
-    exe self.pos . ' ' . self.row . 'sp'
-    exe "buf " . self.main
+    exe self.pos .. ' ' .. self.row .. 'sp'
+    exe "buf " .. self.main
     let cur = winnr()
-    exe cur . 'wincmd w'
+    exe cur .. 'wincmd w'
   else
     let cur = winnr()
-    exe self.pos . ' terminal ++rows=' . self.row. ' ++kill=term'
+    exe self.pos .. ' terminal ++rows=' .. self.row .. ' ++kill=term'
     let self.main = bufnr("$")
     " echom "main " . self.main
-    exe cur . 'wincmd w'
+    exe cur .. 'wincmd w'
   endif
-  let self.opened = 1
+  let self.opened = v:true
 endfun
 
 fun! oneterm.hide() dict
@@ -60,10 +60,10 @@ fun! oneterm.hide() dict
     let win = bufwinnr(self.main)
     let cur = winnr()
     let cur = win > cur ? cur : cur-1
-    exe win . 'hide'
-    exe cur . 'wincmd w'
+    exe win .. 'hide'
+    exe cur .. 'wincmd w'
   endif
-  let self.opened = 0
+  let self.opened = v:false
 endfun
 
 fun! oneterm.toggle() dict
